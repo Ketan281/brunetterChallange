@@ -81,28 +81,30 @@ body {
   background: #ccc;
   cursor: not-allowed;
 }
-/* Navbar styling */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: linear-gradient(to bottom, #e865c5, #1d0511);
+  color: white;
+  font-family: "Inter", Arial, sans-serif;
+}
+
 .navbar {
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  align-items: center;
   padding: 1rem 2rem;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-  position: sticky;
-  top: 0;
-  border-radius: 10px;
-  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  color: #fff;
 }
 
 .navbar-title {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #fff;
 }
 
-/* User profile in the navbar */
 .navbar-user {
   display: flex;
   align-items: center;
@@ -113,56 +115,71 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 2px solid #fff;
-  margin: 10px;
+  border: 2px solid white;
 }
 
 .navbar-user-name {
   font-size: 1rem;
   font-weight: 500;
-  color: #fff;
 }
 
 .navbar-logout-button {
   background: linear-gradient(to right, #ff416c, #ff4b2b);
-  color: #fff;
-  font-size: 0.9rem;
-  font-weight: bold;
+  color: white;
+  padding: 0.5rem 1rem;
   border: none;
   border-radius: 20px;
-  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.navbar-logout-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0px 5px 15px rgba(255, 79, 95, 0.3);
-}
-
-.navbar-logout-button:active {
-  transform: scale(0.95);
-}
-
-/* Main content styling */
-.main-container {
+.main-content {
+  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   text-align: center;
   padding: 2rem;
 }
 
-.main-content {
-  margin-top: 2rem;
-  color: #fff;
-}
-
-.main-content h2 {
+.phase-content h2 {
   font-size: 2rem;
+  margin-bottom: 1rem;
 }
 
-.main-content p {
+.phase-content p {
   font-size: 1rem;
-  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.phase-content ol {
+  text-align: left;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.phase-content ol li {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.next-button {
+  background: linear-gradient(to right, #4caf50, #81c784);
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 0.5rem;
+  transition: transform 0.2s;
+}
+
+.next-button:hover {
+  transform: scale(1.05);
+}
+
+.next-button:active {
+  transform: scale(0.95);
 }
