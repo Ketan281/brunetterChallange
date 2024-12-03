@@ -316,7 +316,7 @@ p {
 }
 
 .popup-content {
-  background-color: white;
+  background-color: rgb(10, 3, 3);
   padding: 2rem;
   border-radius: 10px;
   text-align: center;
