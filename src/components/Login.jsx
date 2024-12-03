@@ -36,15 +36,30 @@ const Login = () => {
         photo: user.photoURL,
       }
       localStorage.setItem("user", JSON.stringify(userData))
-      toast.success("Logged in successfully!")
-      navigate("/main")
+  
+      toast.success("Logged in successfully!", {
+        position: "top-right", // Customize position
+        autoClose: 3000, // Duration of toast
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        icon: false, // Disable the large tick mark icon
+      })
+  
+      navigate("/main") // Redirect to /main after login
     } catch (error) {
       console.error("Error during login:", error)
-      toast.error("Failed to log in. Please try again!")
+      toast.error("Failed to log in. Please try again!", {
+        position: "top-right",
+        autoClose: 3000,
+      })
     } finally {
       setLoading(false)
     }
   }
+  
 
   return (
     <div className="login-container">

@@ -39,13 +39,28 @@ const Main = () => {
     try {
       await signOut(auth)
       localStorage.removeItem("user")
-      toast.success("Logged out successfully!")
-      navigate("/login") // Redirect to login
+  
+      toast.success("Logged out successfully!", {
+        position: "top-right", // Customize position
+        autoClose: 3000, // Duration of toast
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        icon: false, // Disable the large tick mark icon
+      })
+  
+      navigate("/login") // Redirect to /login after logout
     } catch (error) {
       console.error("Error during logout:", error)
-      toast.error("Failed to log out. Please try again!")
+      toast.error("Failed to log out. Please try again!", {
+        position: "top-right",
+        autoClose: 3000,
+      })
     }
   }
+  
 
   const redirectToTwitter = (postText, creatorName = null) => {
     const twitterText = encodeURIComponent(postText)

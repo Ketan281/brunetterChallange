@@ -16,23 +16,31 @@ const App = () => {
         <img src={logo} height={80} alt="logo"/>
       </div>
       <Routes>
-        {/* Default Route: Sign In */}
-        <Route
-          path="/"
-          element={
-            isAuthenticated ? <Navigate to="/main" /> : <Login />
-          }
-        />
-        {/* Main Route: Protected */}
-        <Route
-          path="/main"
-          element={
-            isAuthenticated ? <Main /> : <Navigate to="/" />
-          }
-        />
-        {/* Catch-All: Redirect to Sign In */}
-        <Route path="*" element={<Navigate to="/" />} />
-      </Routes>
+  {/* Default Route: Sign In */}
+  <Route
+    path="/"
+    element={
+      isAuthenticated ? <Navigate to="/main" /> : <Login />
+    }
+  />
+  {/* Login Route */}
+  <Route
+    path="/login"
+    element={
+      isAuthenticated ? <Navigate to="/main" /> : <Login />
+    }
+  />
+  {/* Main Route: Protected */}
+  <Route
+    path="/main"
+    element={
+      isAuthenticated ? <Main /> : <Navigate to="/login" />
+    }
+  />
+  {/* Catch-All: Redirect to Sign In */}
+  <Route path="*" element={<Navigate to="/" />} />
+</Routes>
+
     </div>
   );
 };
