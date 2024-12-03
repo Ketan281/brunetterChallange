@@ -11,6 +11,7 @@ const Main = () => {
   const [selectedCreators, setSelectedCreators] = useState([]) // Track selected creators for Step 2
   const [showBio, setShowBio] = useState(null) // Control which bio is shown
   const [showPopup, setShowPopup] = useState(false) // Show the "Thanks for posting" popup
+  const [popupMessage, setPopupMessage] = useState("") // Message in the popup
 
   const navigate = useNavigate()
 
@@ -46,10 +47,17 @@ const Main = () => {
     }
   }
 
-  const redirectToTwitter = (postText) => {
+  const redirectToTwitter = (postText, creatorName = null) => {
     const twitterText = encodeURIComponent(postText)
     const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}`
     window.open(twitterUrl, "_blank") // Opens Twitter in a new tab
+
+    // Automatically mark the creator as selected if provided
+    if (creatorName) {
+      setSelectedCreators((prev) =>
+        prev.includes(creatorName) ? prev : [...prev, creatorName]
+      )
+    }
   }
 
   const handleNextStep = () => {
@@ -75,7 +83,13 @@ const Main = () => {
           >
             Post on X
           </button>
-          <button className="next-button" onClick={() => setShowPopup(true)}>
+          <button
+            className="next-button"
+            onClick={() => {
+              setPopupMessage("Thanks for posting!")
+              setShowPopup(true)
+            }}
+          >
             Completed This Step
           </button>
         </div>
@@ -98,20 +112,19 @@ const Main = () => {
                   </button>
                   <button
                     className="post-button"
-                    onClick={() => redirectToTwitter(`#ProofOfBrunette Selfie with ${creator.name}!`)}
+                    onClick={() =>
+                      redirectToTwitter(
+                        `#ProofOfBrunette Selfie with ${creator.name}!`,
+                        creator.name
+                      )
+                    }
                   >
                     Post Selfie
                   </button>
                   <input
                     type="checkbox"
                     checked={selectedCreators.includes(creator.name)}
-                    onChange={() =>
-                      setSelectedCreators((prev) =>
-                        prev.includes(creator.name)
-                          ? prev.filter((c) => c !== creator.name)
-                          : [...prev, creator.name]
-                      )
-                    }
+                    readOnly
                   />
                 </div>
                 {showBio === creator.name && <p className="creator-bio">{creator.bio}</p>}
@@ -120,7 +133,10 @@ const Main = () => {
           </ul>
           <button
             className="next-button"
-            onClick={() => setShowPopup(true)}
+            onClick={() => {
+              setPopupMessage("Thanks for posting!")
+              setShowPopup(true)
+            }}
             disabled={selectedCreators.length < 3} // Enable only if 3 creators are selected
           >
             Completed This Step
@@ -136,11 +152,19 @@ const Main = () => {
           </p>
           <button
             className="next-button"
-            onClick={() => redirectToTwitter("Supporting living artists! Here’s my photo/video. #SupportLivingArtists")}
+            onClick={() =>
+              redirectToTwitter("Supporting living artists! Here’s my photo/video. #SupportLivingArtists")
+            }
           >
             Post on X
           </button>
-          <button className="next-button" onClick={() => setShowPopup(true)}>
+          <button
+            className="next-button"
+            onClick={() => {
+              setPopupMessage("Thanks for posting!")
+              setShowPopup(true)
+            }}
+          >
             Completed This Step
           </button>
         </div>
@@ -181,9 +205,9 @@ const Main = () => {
 
       {/* Popup */}
       {showPopup && (
-        <div className="popup">
+        <div className="popup-overlay">
           <div className="popup-content">
-            <h2>Thanks for posting!</h2>
+            <h2>{popupMessage}</h2>
             <button className="popup-cancel-button" onClick={handleNextStep}>
               Cancel
             </button>
