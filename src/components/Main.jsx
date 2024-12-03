@@ -31,27 +31,29 @@ const Main = () => {
 
   return (
     <div className="main-container">
-      {user && (
-        <div className="profile-card">
-          <div className="profile-header">
+      <nav className="navbar">
+        <h1 className="navbar-title">Dashboard</h1>
+        {user && (
+          <div className="navbar-user">
             <img
               src={user.photo}
               alt="Profile"
-              className="profile-image"
+              className="navbar-profile-image"
             />
-            <div>
-              <h2 className="profile-name">{user.name}</h2>
-              <p className="profile-email">{user.email}</p>
-            </div>
+            <span className="navbar-user-name">{user.name}</span>
+            <button
+              onClick={handleLogout}
+              className="navbar-logout-button"
+            >
+              Logout
+            </button>
           </div>
-          <button
-            onClick={handleLogout}
-            className="logout-button"
-          >
-            Logout
-          </button>
-        </div>
-      )}
+        )}
+      </nav>
+      <div className="main-content">
+        <h2>Welcome, {user?.name}!</h2>
+        <p>This is your dashboard. Enjoy exploring!</p>
+      </div>
     </div>
   )
 }
