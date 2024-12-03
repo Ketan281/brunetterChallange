@@ -1,42 +1,149 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
+/* Base styling */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", Arial, sans-serif;
+  background: linear-gradient(to bottom, #E865C5, #1D0511);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Container styling */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+/* Card styling */
+.login-card {
+  background: #fff;
+  border-radius: 20px;
   padding: 2rem;
+  width: 360px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.login-header h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login-header p {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 1.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* Button styling */
+.login-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0.8rem 1.2rem;
+  background: linear-gradient(135deg, #1e90ff, #0077ff);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
-.card {
-  padding: 2em;
+.login-button img {
+  height: 24px;
+  width: 24px;
 }
 
-.read-the-docs {
-  color: #888;
+.login-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.login-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+.main-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* Profile card */
+.profile-card {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  text-align: center;
+  padding: 2rem;
+  color: #333;
+}
+
+/* Profile header */
+.profile-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+/* Profile image */
+.profile-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid #e865c5;
+  margin-right: 1rem;
+}
+
+/* Profile name and email */
+.profile-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #5e2d79;
+}
+
+.profile-email {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Logout button */
+.logout-button {
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.logout-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0px 5px 15px rgba(255, 79, 95, 0.3);
+}
+
+.logout-button:active {
+  transform: scale(0.95);
 }

@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "./components/Login";
 import Main from "./components/Main";
 import { ToastContainer } from "react-toastify";
-
+import "./App.css"
 const App = () => {
   // Check if the user is already logged in
   const isAuthenticated = !!localStorage.getItem("user");
@@ -16,14 +16,14 @@ const App = () => {
         <Route
           path="/"
           element={
-            <Login />
+            isAuthenticated ? <Navigate to="/main" /> : <Login />
           }
         />
         {/* Main Route: Protected */}
         <Route
           path="/main"
           element={
-             <Main /> 
+            isAuthenticated ? <Main /> : <Navigate to="/" />
           }
         />
         {/* Catch-All: Redirect to Sign In */}
