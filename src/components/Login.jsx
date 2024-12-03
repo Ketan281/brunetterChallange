@@ -37,16 +37,6 @@ const Login = () => {
       }
       localStorage.setItem("user", JSON.stringify(userData))
   
-      toast.success("Logged in successfully!", {
-        position: "top-right", // Customize position
-        autoClose: 3000, // Duration of toast
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        icon: false, // Disable the large tick mark icon
-      })
   
       navigate("/main") // Redirect to /main after login
     } catch (error) {

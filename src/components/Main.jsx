@@ -40,16 +40,7 @@ const Main = () => {
       await signOut(auth)
       localStorage.removeItem("user")
   
-      toast.success("Logged out successfully!", {
-        position: "top-right", // Customize position
-        autoClose: 3000, // Duration of toast
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        icon: false, // Disable the large tick mark icon
-      })
+   
   
       navigate("/login") // Redirect to /login after logout
     } catch (error) {
