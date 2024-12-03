@@ -134,7 +134,7 @@ const Main = () => {
   return (
     <div className="main-container">
       <nav className="navbar">
-        <h1 className="navbar-title">Dashboard</h1>
+        {/* <h1 className="navbar-title">Dashboard</h1> */}
         {user && (
           <div className="navbar-user">
             <img
