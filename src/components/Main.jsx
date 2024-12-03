@@ -5,7 +5,7 @@ import { toast } from "react-toastify"
 import g from "../assets/rakshita.jpg"
 import b from "../assets/angad.jpg"
 
-const Main = () => {
+const Main = ({ onLogout }) => {
   const [user, setUser] = useState(null)
   const [step, setStep] = useState(1) // Step tracking for multi-phase flow
   const [selectedCreators, setSelectedCreators] = useState([]) // Track selected creators for Step 2
@@ -15,6 +15,16 @@ const Main = () => {
 
   const navigate = useNavigate()
 
+
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"))
+    if (!storedUser) {
+      navigate("/") // Redirect to login if not logged in
+    } else {
+      setUser(storedUser)
+    }
+  }, [])
   const creators = [
     { name: "Rakshita", bio: "Rakshita is a talented digital artist specializing in NFT designs.", photo: g },
     { name: "Angad", bio: "Angad is a developer and NFT enthusiast with a knack for blockchain tech.", photo: b },
@@ -25,32 +35,21 @@ const Main = () => {
     { name: "Gayatri", bio: "Gayatri is an award-winning photographer capturing vibrant stories through her lens.", photo: g },
   ]
 
-  useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem("user"))
-    if (!storedUser) {
-      navigate("/") // Redirect to login if not logged in
-    } else {
-      setUser(storedUser)
-    }
-  }, [navigate])
-
   const handleLogout = async () => {
-    const auth = getAuth()
+    const auth = getAuth();
     try {
-      await signOut(auth)
-      localStorage.removeItem("user")
-  
-   
-  
-      navigate("/login") // Redirect to /login after logout
+      await signOut(auth);
+      localStorage.removeItem("user");
+      onLogout(); // Update App state
     } catch (error) {
-      console.error("Error during logout:", error)
+      console.error("Error during logout:", error);
       toast.error("Failed to log out. Please try again!", {
         position: "top-right",
         autoClose: 3000,
-      })
+      });
     }
-  }
+  };
+
   
 
   const redirectToTwitter = (postText, creatorName = null) => {
