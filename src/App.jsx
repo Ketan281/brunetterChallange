@@ -15,6 +15,10 @@ const App = () => {
     setIsAuthenticated(!!user);
   }, []);
 
+  const handleLogin = () => {
+    setIsAuthenticated(true); // Trigger re-render when user logs in
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("user");
     setIsAuthenticated(false);
@@ -29,11 +33,11 @@ const App = () => {
       <Routes>
         <Route
           path="/"
-          element={isAuthenticated ? <Navigate to="/main" /> : <Login />}
+          element={isAuthenticated ? <Navigate to="/main" /> : <Login onLogin={handleLogin} />}
         />
         <Route
           path="/login"
-          element={isAuthenticated ? <Navigate to="/main" /> : <Login />}
+          element={isAuthenticated ? <Navigate to="/main" /> : <Login onLogin={handleLogin} />}
         />
         <Route
           path="/main"

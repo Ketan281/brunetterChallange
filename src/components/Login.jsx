@@ -21,54 +21,49 @@ const app = initializeApp(firebaseConfig)
 const auth = getAuth(app)
 const provider = new TwitterAuthProvider()
 
-const Login = () => {
-  const [loading, setLoading] = useState(false)
-  const navigate = useNavigate()
-
-  const handleLogin = async () => {
-    setLoading(true)
-    try {
-      const result = await signInWithPopup(auth, provider)
-      const user = result.user
-      const userData = {
-        name: user.displayName,
-        email: user.email,
-        photo: user.photoURL,
+const Login = ({ onLogin }) => {
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+  
+    const handleLogin = async () => {
+      setLoading(true);
+      try {
+        const result = await signInWithPopup(auth, provider);
+        const user = result.user;
+        const userData = {
+          name: user.displayName,
+          email: user.email,
+          photo: user.photoURL,
+        };
+        localStorage.setItem("user", JSON.stringify(userData));
+        onLogin(); // Update App state to mark the user as logged in
+        navigate("/main"); // Redirect to /main
+      } catch (error) {
+        console.error("Error during login:", error);
+        toast.error("Failed to log in. Please try again!", {
+          position: "top-right",
+          autoClose: 3000,
+        });
+      } finally {
+        setLoading(false);
       }
-      localStorage.setItem("user", JSON.stringify(userData))
+    };
   
-  
-      navigate("/main") // Redirect to /main after login
-    } catch (error) {
-      console.error("Error during login:", error)
-      toast.error("Failed to log in. Please try again!", {
-        position: "top-right",
-        autoClose: 3000,
-      })
-    } finally {
-      setLoading(false)
-    }
-  }
-  
-
-  return (
-    <div className="login-container">
-      <div className="login-card">
-        <div className="login-header">
-          <h1>Welcome Back!</h1>
-          <p>Log in to access your personalized dashboard.</p>
+    return (
+      <div className="login-container">
+        <div className="login-card">
+          <div className="login-header">
+            <h1>Welcome Back!</h1>
+            <p>Log in to access your personalized dashboard.</p>
+          </div>
+          <button onClick={handleLogin} disabled={loading} className="login-button">
+            <img src={X} alt="Twitter" />
+            {loading ? "Logging in..." : "Login with Twitter"}
+          </button>
         </div>
-        <button
-          onClick={handleLogin}
-          disabled={loading}
-          className="login-button"
-        >
-          <img src={X} alt="Twitter" />
-          {loading ? "Logging in..." : "Login with Twitter"}
-        </button>
       </div>
-    </div>
-  )
-}
-
-export default Login
+    );
+  };
+  
+  export default Login;
+  
