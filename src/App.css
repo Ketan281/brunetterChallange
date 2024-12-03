@@ -5,15 +5,21 @@
   box-sizing: border-box;
 }
 
+/* Import funky fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Caveat:wght@700&display=swap');
+
+/* General body styling */
 body {
-  font-family: "Inter", Arial, sans-serif;
-  background: linear-gradient(to bottom, #E865C5, #1D0511);
-  color: #fff;
+  margin: 0;
+  font-family: "Bangers", "Caveat", cursive; /* Funky fonts */
+  background: linear-gradient(to bottom, #e865c5, #1d0511);
+  color: white;
+  height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  overflow: hidden;
+  text-align: center;
 }
 
 /* Container styling */
@@ -98,11 +104,15 @@ body {
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(10px);
   color: #fff;
+  margin-top: 2em;
+  border-radius: 10px;
 }
 
 .navbar-title {
   font-size: 1.5rem;
   font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .navbar-user {
@@ -141,9 +151,12 @@ body {
   align-items: center;
   text-align: center;
   padding: 2rem;
+  font-family: "Bangers", cursive; /* Funky bold font */
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .phase-content h2 {
+  font-family: "Caveat", cursive; /* Funky handwritten font */
   font-size: 2rem;
   margin-bottom: 1rem;
 }
@@ -165,19 +178,20 @@ body {
 }
 
 .next-button {
-  background: linear-gradient(to right, #4caf50, #81c784);
+  background: linear-gradient(to right, #ff416c, #ff4b2b);
   color: white;
   padding: 0.7rem 1.5rem;
   border: none;
   border-radius: 30px;
-  font-size: 1rem;
+  font-size: 1.2rem;
+  font-family: "Bangers", cursive; /* Funky button font */
   cursor: pointer;
-  margin: 0.5rem;
-  transition: transform 0.2s;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .next-button:hover {
   transform: scale(1.05);
+  box-shadow: 0px 4px 15px rgba(255, 79, 95, 0.3);
 }
 
 .next-button:active {
