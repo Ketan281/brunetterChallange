@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useNavigate, useLocation } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom" // Added useLocation for URL parsing
 import { getAuth, signOut } from "firebase/auth"
 import { toast } from "react-toastify"
 import g from "../assets/rakshita.jpg"
