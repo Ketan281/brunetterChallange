@@ -126,11 +126,13 @@ body {
   height: 40px;
   border-radius: 50%;
   border: 2px solid white;
+  margin-left: 2em;
 }
 
 .navbar-user-name {
   font-size: 1rem;
   font-weight: 500;
+  margin-left: 2em;
 }
 
 .navbar-logout-button {
