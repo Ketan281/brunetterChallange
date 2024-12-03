@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useNavigate, useLocation } from "react-router-dom" // Added useLocation for URL parsing
+import { useNavigate, useLocation } from "react-router-dom"
 import { getAuth, signOut } from "firebase/auth"
 import { toast } from "react-toastify"
 import g from "../assets/rakshita.jpg"
@@ -11,6 +11,7 @@ const Main = () => {
   const [tweetPosted, setTweetPosted] = useState(false) // Track if the user has posted for Step 1
   const [selectedCreators, setSelectedCreators] = useState([]) // Track selected creators for Step 2
   const [showBio, setShowBio] = useState(null) // Control which bio is shown
+  const [supportPosted, setSupportPosted] = useState(false) // Track if the user completed Step 3
   const navigate = useNavigate()
   const location = useLocation() // To parse URL parameters
 
@@ -37,6 +38,7 @@ const Main = () => {
     const queryParams = new URLSearchParams(location.search)
     const posted = queryParams.get("step1Posted") // Check if the user completed Step 1
     const postedCreator = queryParams.get("postedCreator") // Check if the user posted about a creator
+    const supportCompleted = queryParams.get("supportPosted") // Check if Step 3 is completed
 
     if (posted === "true") {
       setTweetPosted(true) // Enable the button if they posted on Twitter
@@ -50,6 +52,10 @@ const Main = () => {
         }
         return prev
       })
+    }
+
+    if (supportCompleted === "true") {
+      setSupportPosted(true) // Mark Step 3 as completed
     }
   }, [navigate, location.search]) // Runs on URL change
 
@@ -75,6 +81,15 @@ const Main = () => {
       `Proof of brunette selfie (On X). #Proofof$Brunette`
     )
     const returnUrl = `${window.location.origin}${window.location.pathname}?step1Posted=true` // Add URL parameter
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}&url=${encodeURIComponent(returnUrl)}`
+    window.open(twitterUrl, "_blank") // Opens Twitter in a new tab
+  }
+
+  const redirectToTwitterStep3 = () => {
+    const twitterText = encodeURIComponent(
+      `Supporting living artists! Here’s my photo/video. #SupportLivingArtists`
+    )
+    const returnUrl = `${window.location.origin}${window.location.pathname}?supportPosted=true` // Add URL parameter
     const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}&url=${encodeURIComponent(returnUrl)}`
     window.open(twitterUrl, "_blank") // Opens Twitter in a new tab
   }
@@ -160,6 +175,26 @@ const Main = () => {
           >
             Complete Quest
           </button>
+        </div>
+      )
+    } else if (step === 3) {
+      return (
+        <div className="phase-content">
+          <h2>Phase 3: Support Living Artists</h2>
+          <p>
+            To proceed, post a video or photo with the hashtag <strong>#SupportLivingArtists</strong> on X.
+          </p>
+          <button className="next-button" onClick={redirectToTwitterStep3}>
+            Post on X
+          </button>
+          {supportPosted && (
+            <div className="hurray-screen">
+              <h2>Hurray!</h2>
+              <p>
+                You are now entered for our 10 Million <strong>$Brunette</strong> grand prize!
+              </p>
+            </div>
+          )}
         </div>
       )
     }
