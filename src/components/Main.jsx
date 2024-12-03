@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useNavigate, useLocation } from "react-router-dom" // Added useLocation for URL parsing
+import { useNavigate } from "react-router-dom"
 import { getAuth, signOut } from "firebase/auth"
 import { toast } from "react-toastify"
 import g from "../assets/rakshita.jpg"
@@ -8,12 +8,11 @@ import b from "../assets/angad.jpg"
 const Main = () => {
   const [user, setUser] = useState(null)
   const [step, setStep] = useState(1) // Step tracking for multi-phase flow
-  const [tweetPosted, setTweetPosted] = useState(false) // Track if the user has posted for Step 1
   const [selectedCreators, setSelectedCreators] = useState([]) // Track selected creators for Step 2
   const [showBio, setShowBio] = useState(null) // Control which bio is shown
-  const [supportPosted, setSupportPosted] = useState(false) // Track if the user completed Step 3
+  const [showPopup, setShowPopup] = useState(false) // Show the "Thanks for posting" popup
+
   const navigate = useNavigate()
-  const location = useLocation() // To parse URL parameters
 
   const creators = [
     { name: "Rakshita", bio: "Rakshita is a talented digital artist specializing in NFT designs.", photo: g },
@@ -26,38 +25,13 @@ const Main = () => {
   ]
 
   useEffect(() => {
-    // Check for logged-in user
     const storedUser = JSON.parse(localStorage.getItem("user"))
     if (!storedUser) {
       navigate("/") // Redirect to login if not logged in
     } else {
       setUser(storedUser)
     }
-
-    // Parse URL parameters to check if the user posted on Twitter
-    const queryParams = new URLSearchParams(location.search)
-    const posted = queryParams.get("step1Posted") // Check if the user completed Step 1
-    const postedCreator = queryParams.get("postedCreator") // Check if the user posted about a creator
-    const supportCompleted = queryParams.get("supportPosted") // Check if Step 3 is completed
-
-    if (posted === "true") {
-      setTweetPosted(true) // Enable the button if they posted on Twitter
-    }
-
-    if (postedCreator && creators.find((c) => c.name === postedCreator)) {
-      // If creator exists, mark them as selected
-      setSelectedCreators((prev) => {
-        if (!prev.includes(postedCreator)) {
-          return [...prev, postedCreator]
-        }
-        return prev
-      })
-    }
-
-    if (supportCompleted === "true") {
-      setSupportPosted(true) // Mark Step 3 as completed
-    }
-  }, [navigate, location.search]) // Runs on URL change
+  }, [navigate])
 
   const handleLogout = async () => {
     const auth = getAuth()
@@ -72,40 +46,19 @@ const Main = () => {
     }
   }
 
-  const toggleBio = (creator) => {
-    setShowBio(showBio === creator ? null : creator) // Toggle bio visibility
-  }
-
-  const redirectToTwitterStep1 = () => {
-    const twitterText = encodeURIComponent(
-      `Proof of brunette selfie (On X). #Proofof$Brunette`
-    )
-    const returnUrl = `https://brunetterchallange.vercel.app/?step1Posted=true` // Use your specific return URL
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}&url=${encodeURIComponent(returnUrl)}`
-    window.open(twitterUrl, "_blank") // Opens Twitter in a new tab
-  }
-  
-
-  const redirectToTwitterStep3 = () => {
-    const twitterText = encodeURIComponent(
-      `Supporting living artists! Here’s my photo/video. #SupportLivingArtists`
-    )
-    const returnUrl = `${window.location.origin}${window.location.pathname}?supportPosted=true` // Add URL parameter
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}&url=${encodeURIComponent(returnUrl)}`
-    window.open(twitterUrl, "_blank") // Opens Twitter in a new tab
-  }
-
-  const redirectToTwitter = (creatorName) => {
-    const twitterText = encodeURIComponent(
-      `#ProofOfBrunette Selfie with ${creatorName}!`
-    )
-    const returnUrl = `${window.location.origin}${window.location.pathname}?postedCreator=${creatorName}` // Add URL parameter
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}&url=${encodeURIComponent(returnUrl)}`
+  const redirectToTwitter = (postText) => {
+    const twitterText = encodeURIComponent(postText)
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}`
     window.open(twitterUrl, "_blank") // Opens Twitter in a new tab
   }
 
   const handleNextStep = () => {
     setStep((prevStep) => prevStep + 1) // Move to the next step
+    setShowPopup(false) // Hide the popup when proceeding to the next step
+  }
+
+  const toggleBio = (creator) => {
+    setShowBio(showBio === creator ? null : creator) // Toggle bio visibility
   }
 
   const renderStepContent = () => {
@@ -114,26 +67,16 @@ const Main = () => {
         <div className="phase-content">
           <h2>Phase 1: Eligibility for Merch</h2>
           <p>
-            To proceed, complete the following steps:
+            To proceed, post a selfie with the hashtag: <strong>#ProofOf$Brunette</strong> on X.
           </p>
-          <ol>
-            <li>
-              Post a selfie with the hashtag: <strong>#ProofOf$Brunette</strong> on X.
-            </li>
-            <li>
-              Follow us on social media: <strong>BrunetteBrigade</strong> and <strong>Coi_NFT</strong>.
-            </li>
-          </ol>
-          <p>Click the button below to post your tweet:</p>
-          <button className="next-button" onClick={redirectToTwitterStep1}>
-            Post on X
-          </button>
           <button
             className="next-button"
-            onClick={handleNextStep}
-            disabled={!tweetPosted} // Disable button until user posts on Twitter
+            onClick={() => redirectToTwitter("Proof of brunette selfie (On X). #Proofof$Brunette")}
           >
-            I’ve Completed This Step
+            Post on X
+          </button>
+          <button className="next-button" onClick={() => setShowPopup(true)}>
+            Completed This Step
           </button>
         </div>
       )
@@ -155,14 +98,20 @@ const Main = () => {
                   </button>
                   <button
                     className="post-button"
-                    onClick={() => redirectToTwitter(creator.name)}
+                    onClick={() => redirectToTwitter(`#ProofOfBrunette Selfie with ${creator.name}!`)}
                   >
                     Post Selfie
                   </button>
                   <input
                     type="checkbox"
                     checked={selectedCreators.includes(creator.name)}
-                    readOnly
+                    onChange={() =>
+                      setSelectedCreators((prev) =>
+                        prev.includes(creator.name)
+                          ? prev.filter((c) => c !== creator.name)
+                          : [...prev, creator.name]
+                      )
+                    }
                   />
                 </div>
                 {showBio === creator.name && <p className="creator-bio">{creator.bio}</p>}
@@ -170,11 +119,11 @@ const Main = () => {
             ))}
           </ul>
           <button
-            className="complete-button"
-            onClick={handleNextStep}
-            disabled={selectedCreators.length < 3} // Disable until 3 creators are selected
+            className="next-button"
+            onClick={() => setShowPopup(true)}
+            disabled={selectedCreators.length < 3} // Enable only if 3 creators are selected
           >
-            Complete Quest
+            Completed This Step
           </button>
         </div>
       )
@@ -183,19 +132,26 @@ const Main = () => {
         <div className="phase-content">
           <h2>Phase 3: Support Living Artists</h2>
           <p>
-            To proceed, post a video or photo with the hashtag <strong>#SupportLivingArtists</strong> on X.
+            Post a video or photo with the hashtag <strong>#SupportLivingArtists</strong> on X.
           </p>
-          <button className="next-button" onClick={redirectToTwitterStep3}>
+          <button
+            className="next-button"
+            onClick={() => redirectToTwitter("Supporting living artists! Here’s my photo/video. #SupportLivingArtists")}
+          >
             Post on X
           </button>
-          {supportPosted && (
-            <div className="hurray-screen">
-              <h2>Hurray!</h2>
-              <p>
-                You are now entered for our 10 Million <strong>$Brunette</strong> grand prize!
-              </p>
-            </div>
-          )}
+          <button className="next-button" onClick={() => setShowPopup(true)}>
+            Completed This Step
+          </button>
+        </div>
+      )
+    } else {
+      return (
+        <div className="hurray-screen">
+          <h2>Hurray!</h2>
+          <p>
+            You are now entered for our 10 Million <strong>$Brunette</strong> grand prize!
+          </p>
         </div>
       )
     }
@@ -221,9 +177,19 @@ const Main = () => {
           </div>
         )}
       </nav>
-      <div className="main-content">
-        {renderStepContent()} {/* Render the step content */}
-      </div>
+      <div className="main-content">{renderStepContent()}</div>
+
+      {/* Popup */}
+      {showPopup && (
+        <div className="popup">
+          <div className="popup-content">
+            <h2>Thanks for posting!</h2>
+            <button className="popup-cancel-button" onClick={handleNextStep}>
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
