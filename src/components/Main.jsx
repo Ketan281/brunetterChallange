@@ -80,10 +80,11 @@ const Main = () => {
     const twitterText = encodeURIComponent(
       `Proof of brunette selfie (On X). #Proofof$Brunette`
     )
-    const returnUrl = `${window.location.origin}${window.location.pathname}?step1Posted=true` // Add URL parameter
+    const returnUrl = `https://brunetterchallange.vercel.app/?step1Posted=true` // Use your specific return URL
     const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}&url=${encodeURIComponent(returnUrl)}`
     window.open(twitterUrl, "_blank") // Opens Twitter in a new tab
   }
+  
 
   const redirectToTwitterStep3 = () => {
     const twitterText = encodeURIComponent(
