@@ -8,8 +8,8 @@ import b from "../assets/angad.jpg"
 const Main = () => {
   const [user, setUser] = useState(null)
   const [step, setStep] = useState(1) // Step tracking for multi-phase flow
-  const [tweetPosted, setTweetPosted] = useState(false) // Track if the user has posted
-  const [selectedCreators, setSelectedCreators] = useState([]) // Track selected creators
+  const [tweetPosted, setTweetPosted] = useState(false) // Track if the user has posted for Step 1
+  const [selectedCreators, setSelectedCreators] = useState([]) // Track selected creators for Step 2
   const [showBio, setShowBio] = useState(null) // Control which bio is shown
   const navigate = useNavigate()
   const location = useLocation() // To parse URL parameters
