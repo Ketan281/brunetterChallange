@@ -1,25 +1,51 @@
 import React, { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom" // Added useLocation for URL parsing
 import { getAuth, signOut } from "firebase/auth"
 import { toast } from "react-toastify"
 import g from "../assets/rakshita.jpg"
 import b from "../assets/angad.jpg"
+
 const Main = () => {
   const [user, setUser] = useState(null)
   const [step, setStep] = useState(1) // Step tracking for multi-phase flow
   const [selectedCreators, setSelectedCreators] = useState([]) // Track selected creators
   const [showBio, setShowBio] = useState(null) // Control which bio is shown
-
   const navigate = useNavigate()
+  const location = useLocation() // To parse URL parameters
+
+  const creators = [
+    { name: "Rakshita", bio: "Rakshita is a talented digital artist specializing in NFT designs.", photo: g },
+    { name: "Angad", bio: "Angad is a developer and NFT enthusiast with a knack for blockchain tech.", photo: b },
+    { name: "Abverse", bio: "Abverse creates unique 3D art and immersive metaverse experiences.", photo: b },
+    { name: "Deepakshi", bio: "Deepakshi is an AI researcher and digital creator with a passion for community building.", photo: g },
+    { name: "Wafu", bio: "Wafu is a cartoonist and illustrator known for quirky, lovable characters.", photo: b },
+    { name: "Harsh", bio: "Harsh specializes in generative art and pushing the boundaries of creative coding.", photo: b },
+    { name: "Gayatri", bio: "Gayatri is an award-winning photographer capturing vibrant stories through her lens.", photo: g },
+  ]
 
   useEffect(() => {
+    // Check for logged-in user
     const storedUser = JSON.parse(localStorage.getItem("user"))
     if (!storedUser) {
       navigate("/") // Redirect to login if not logged in
     } else {
       setUser(storedUser)
     }
-  }, [navigate])
+
+    // Parse URL parameters to check if a user posted on Twitter
+    const queryParams = new URLSearchParams(location.search)
+    const postedCreator = queryParams.get("postedCreator") // Get the creator name from URL
+
+    if (postedCreator && creators.find((c) => c.name === postedCreator)) {
+      // If creator exists, mark them as selected
+      setSelectedCreators((prev) => {
+        if (!prev.includes(postedCreator)) {
+          return [...prev, postedCreator]
+        }
+        return prev
+      })
+    }
+  }, [navigate, location.search]) // Runs on URL change
 
   const handleLogout = async () => {
     const auth = getAuth()
@@ -34,33 +60,16 @@ const Main = () => {
     }
   }
 
-  const creators = [
-    { name: "Rakshita", bio: "Rakshita is a talented digital artist specializing in NFT designs.", photo: g },
-    { name: "Angad", bio: "Angad is a developer and NFT enthusiast with a knack for blockchain tech.", photo: b },
-    { name: "Abverse", bio: "Abverse creates unique 3D art and immersive metaverse experiences.", photo: b },
-    { name: "Deepakshi", bio: "Deepakshi is an AI researcher and digital creator with a passion for community building.", photo: g },
-    { name: "Wafu", bio: "Wafu is a cartoonist and illustrator known for quirky, lovable characters.", photo: b },
-    { name: "Harsh", bio: "Harsh specializes in generative art and pushing the boundaries of creative coding.", photo: b },
-    { name: "Gayatri", bio: "Gayatri is an award-winning photographer capturing vibrant stories through her lens.", photo: g },
-  ]
-
-  const toggleCreatorSelection = (creator) => {
-    if (selectedCreators.includes(creator)) {
-      setSelectedCreators(selectedCreators.filter((c) => c !== creator))
-    } else {
-      setSelectedCreators([...selectedCreators, creator])
-    }
-  }
-
   const toggleBio = (creator) => {
     setShowBio(showBio === creator ? null : creator) // Toggle bio visibility
   }
 
-  const redirectToTwitter = () => {
+  const redirectToTwitter = (creatorName) => {
     const twitterText = encodeURIComponent(
-      `I just completed my quest with ${selectedCreators.join(", ")}! Here's my #ProofOfBrunette selfie with them!`
+      `#ProofOfBrunette Selfie with ${creatorName}!`
     )
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}`
+    const returnUrl = `${window.location.origin}${window.location.pathname}?postedCreator=${creatorName}` // Add URL parameter
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}&url=${encodeURIComponent(returnUrl)}`
     window.open(twitterUrl, "_blank") // Opens Twitter in a new tab
   }
 
@@ -109,10 +118,16 @@ const Main = () => {
                   <button className="bio-toggle" onClick={() => toggleBio(creator.name)}>
                     {showBio === creator.name ? "Hide Bio" : "View Bio"}
                   </button>
+                  <button
+                    className="post-button"
+                    onClick={() => redirectToTwitter(creator.name)}
+                  >
+                    Post Selfie
+                  </button>
                   <input
                     type="checkbox"
                     checked={selectedCreators.includes(creator.name)}
-                    onChange={() => toggleCreatorSelection(creator.name)}
+                    readOnly
                   />
                 </div>
                 {showBio === creator.name && <p className="creator-bio">{creator.bio}</p>}
@@ -121,7 +136,7 @@ const Main = () => {
           </ul>
           <button
             className="complete-button"
-            onClick={redirectToTwitter}
+            onClick={handleNextStep}
             disabled={selectedCreators.length < 3} // Disable until 3 creators are selected
           >
             Complete Quest
@@ -134,7 +149,6 @@ const Main = () => {
   return (
     <div className="main-container">
       <nav className="navbar">
-        {/* <h1 className="navbar-title">Dashboard</h1> */}
         {user && (
           <div className="navbar-user">
             <img

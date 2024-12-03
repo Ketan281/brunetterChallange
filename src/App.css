@@ -14,7 +14,7 @@ body {
   font-family: "Bangers", "Caveat", cursive; /* Funky fonts */
   background: linear-gradient(to bottom, #e865c5, #1d0511);
   color: white;
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
