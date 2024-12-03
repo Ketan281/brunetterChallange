@@ -197,3 +197,107 @@ body {
 .next-button:active {
   transform: scale(0.95);
 }
+/* General styling for phase content */
+.phase-content {
+  text-align: center;
+  color: white;
+  font-family: "Inter", sans-serif;
+}
+
+h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+p {
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Creator list styling */
+.creator-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.creator-item {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  position: relative;
+}
+
+.creator-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.creator-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.creator-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0 1rem;
+}
+
+.bio-toggle {
+  background: none;
+  color: #ff79c6;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  text-decoration: underline;
+}
+
+.bio-toggle:hover {
+  color: #ff92d0;
+}
+
+.creator-bio {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  text-align: left;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 0.5rem;
+  border-radius: 5px;
+  color: #ddd;
+}
+
+/* Complete button */
+.complete-button {
+  background: linear-gradient(to right, #4caf50, #81c784);
+  color: white;
+  padding: 0.7rem 1.5rem;
+  border: none;
+  border-radius: 30px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.complete-button:disabled {
+  background: #bbb;
+  cursor: not-allowed;
+}
+
+.complete-button:hover:not(:disabled) {
+  transform: scale(1.05);
+}
+
+.complete-button:active:not(:disabled) {
+  transform: scale(0.95);
+}

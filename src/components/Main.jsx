@@ -2,10 +2,14 @@ import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { getAuth, signOut } from "firebase/auth"
 import { toast } from "react-toastify"
-
+import g from "../assets/rakshita.jpg"
+import b from "../assets/angad.jpg"
 const Main = () => {
   const [user, setUser] = useState(null)
   const [step, setStep] = useState(1) // Step tracking for multi-phase flow
+  const [selectedCreators, setSelectedCreators] = useState([]) // Track selected creators
+  const [showBio, setShowBio] = useState(null) // Control which bio is shown
+
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -30,9 +34,31 @@ const Main = () => {
     }
   }
 
+  const creators = [
+    { name: "Rakshita", bio: "Rakshita is a talented digital artist specializing in NFT designs.", photo: g },
+    { name: "Angad", bio: "Angad is a developer and NFT enthusiast with a knack for blockchain tech.", photo: b },
+    { name: "Abverse", bio: "Abverse creates unique 3D art and immersive metaverse experiences.", photo: b },
+    { name: "Deepakshi", bio: "Deepakshi is an AI researcher and digital creator with a passion for community building.", photo: g },
+    { name: "Wafu", bio: "Wafu is a cartoonist and illustrator known for quirky, lovable characters.", photo: b },
+    { name: "Harsh", bio: "Harsh specializes in generative art and pushing the boundaries of creative coding.", photo: b },
+    { name: "Gayatri", bio: "Gayatri is an award-winning photographer capturing vibrant stories through her lens.", photo: g },
+  ]
+
+  const toggleCreatorSelection = (creator) => {
+    if (selectedCreators.includes(creator)) {
+      setSelectedCreators(selectedCreators.filter((c) => c !== creator))
+    } else {
+      setSelectedCreators([...selectedCreators, creator])
+    }
+  }
+
+  const toggleBio = (creator) => {
+    setShowBio(showBio === creator ? null : creator) // Toggle bio visibility
+  }
+
   const redirectToTwitter = () => {
     const twitterText = encodeURIComponent(
-      "Proof of brunette selfie (On X). #Proofof$Brunette"
+      `I just completed my quest with ${selectedCreators.join(", ")}! Here's my #ProofOfBrunette selfie with them!`
     )
     const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}`
     window.open(twitterUrl, "_blank") // Opens Twitter in a new tab
@@ -43,48 +69,65 @@ const Main = () => {
   }
 
   const renderStepContent = () => {
-    switch (step) {
-      case 1:
-        return (
-          <div className="phase-content">
-            <h2>Phase 1: Eligibility for Merch</h2>
-            <p>
-              To proceed, complete the following steps:
-            </p>
-            <ol>
-              <li>
-                Post a selfie with the hashtag: <strong>#ProofOf$Brunette</strong> on X.
+    if (step === 1) {
+      return (
+        <div className="phase-content">
+          <h2>Phase 1: Eligibility for Merch</h2>
+          <p>
+            To proceed, complete the following steps:
+          </p>
+          <ol>
+            <li>
+              Post a selfie with the hashtag: <strong>#ProofOf$Brunette</strong> on X.
+            </li>
+            <li>
+              Follow us on social media: <strong>BrunetteBrigade</strong> and <strong>Coi_NFT</strong>.
+            </li>
+          </ol>
+          <p>Click the button below to post your tweet:</p>
+          <button className="next-button" onClick={() => window.open("https://twitter.com/intent/tweet?text=Proof%20of%20brunette%20selfie%20(On%20X).%20#Proofof$Brunette", "_blank")}>
+            Post on X
+          </button>
+          <button className="next-button" onClick={handleNextStep}>
+            I’ve Completed This Step
+          </button>
+        </div>
+      )
+    } else if (step === 2) {
+      return (
+        <div className="phase-content">
+          <h2>Phase 2: Eligibility for Grand Prize of 10 Million $Brunette</h2>
+          <p>
+            Quest: Interact with our creators and get a #ProofOfBrunette selfie with any 3 of the following creators:
+          </p>
+          <ul className="creator-list">
+            {creators.map((creator) => (
+              <li key={creator.name} className="creator-item">
+                <div className="creator-header">
+                  <img src={creator.photo} alt={creator.name} className="creator-photo" />
+                  <span className="creator-name">{creator.name}</span>
+                  <button className="bio-toggle" onClick={() => toggleBio(creator.name)}>
+                    {showBio === creator.name ? "Hide Bio" : "View Bio"}
+                  </button>
+                  <input
+                    type="checkbox"
+                    checked={selectedCreators.includes(creator.name)}
+                    onChange={() => toggleCreatorSelection(creator.name)}
+                  />
+                </div>
+                {showBio === creator.name && <p className="creator-bio">{creator.bio}</p>}
               </li>
-              <li>
-                Follow us on social media: <strong>BrunetteBrigade</strong> and <strong>Coi_NFT</strong>.
-              </li>
-            </ol>
-            <p>Click the button below to post your tweet:</p>
-            <button className="next-button" onClick={redirectToTwitter}>
-              Post on X
-            </button>
-            <button className="next-button" onClick={handleNextStep}>
-              I’ve Completed This Step
-            </button>
-          </div>
-        )
-      case 2:
-        return (
-          <div className="phase-content">
-            <h2>Phase 2: Shipping Details</h2>
-            <p>Enter your shipping details to receive your merch.</p>
-            <button className="next-button" onClick={handleNextStep}>
-              Continue
-            </button>
-          </div>
-        )
-      default:
-        return (
-          <div className="phase-content">
-            <h2>Thank You!</h2>
-            <p>You have completed all the steps. Enjoy your merch!</p>
-          </div>
-        )
+            ))}
+          </ul>
+          <button
+            className="complete-button"
+            onClick={redirectToTwitter}
+            disabled={selectedCreators.length < 3} // Disable until 3 creators are selected
+          >
+            Complete Quest
+          </button>
+        </div>
+      )
     }
   }
 
