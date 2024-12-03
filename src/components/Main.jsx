@@ -40,7 +40,7 @@ const Main = () => {
       await signOut(auth)
       localStorage.removeItem("user")
       toast.success("Logged out successfully!")
-      navigate("/") // Redirect to login
+      navigate("/login") // Redirect to login
     } catch (error) {
       console.error("Error during logout:", error)
       toast.error("Failed to log out. Please try again!")
