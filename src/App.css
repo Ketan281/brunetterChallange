@@ -14,7 +14,7 @@ body {
   font-family: "Bangers", "Caveat", cursive; /* Funky fonts */
   background: linear-gradient(to bottom, #e865c5, #1d0511);
   color: white;
-  min-height: 100vh;
+  /* min-height: 100vh; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -187,6 +187,7 @@ body {
   font-family: "Bangers", cursive; /* Funky button font */
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin: 2em;
 }
 
 .next-button:hover {

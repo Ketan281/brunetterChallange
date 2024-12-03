@@ -8,6 +8,7 @@ import b from "../assets/angad.jpg"
 const Main = () => {
   const [user, setUser] = useState(null)
   const [step, setStep] = useState(1) // Step tracking for multi-phase flow
+  const [tweetPosted, setTweetPosted] = useState(false) // Track if the user has posted
   const [selectedCreators, setSelectedCreators] = useState([]) // Track selected creators
   const [showBio, setShowBio] = useState(null) // Control which bio is shown
   const navigate = useNavigate()
@@ -32,9 +33,14 @@ const Main = () => {
       setUser(storedUser)
     }
 
-    // Parse URL parameters to check if a user posted on Twitter
+    // Parse URL parameters to check if the user posted on Twitter
     const queryParams = new URLSearchParams(location.search)
-    const postedCreator = queryParams.get("postedCreator") // Get the creator name from URL
+    const posted = queryParams.get("step1Posted") // Check if the user completed Step 1
+    const postedCreator = queryParams.get("postedCreator") // Check if the user posted about a creator
+
+    if (posted === "true") {
+      setTweetPosted(true) // Enable the button if they posted on Twitter
+    }
 
     if (postedCreator && creators.find((c) => c.name === postedCreator)) {
       // If creator exists, mark them as selected
@@ -62,6 +68,15 @@ const Main = () => {
 
   const toggleBio = (creator) => {
     setShowBio(showBio === creator ? null : creator) // Toggle bio visibility
+  }
+
+  const redirectToTwitterStep1 = () => {
+    const twitterText = encodeURIComponent(
+      `Proof of brunette selfie (On X). #Proofof$Brunette`
+    )
+    const returnUrl = `${window.location.origin}${window.location.pathname}?step1Posted=true` // Add URL parameter
+    const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}&url=${encodeURIComponent(returnUrl)}`
+    window.open(twitterUrl, "_blank") // Opens Twitter in a new tab
   }
 
   const redirectToTwitter = (creatorName) => {
@@ -94,10 +109,14 @@ const Main = () => {
             </li>
           </ol>
           <p>Click the button below to post your tweet:</p>
-          <button className="next-button" onClick={() => window.open("https://twitter.com/intent/tweet?text=Proof%20of%20brunette%20selfie%20(On%20X).%20#Proofof$Brunette", "_blank")}>
+          <button className="next-button" onClick={redirectToTwitterStep1}>
             Post on X
           </button>
-          <button className="next-button" onClick={handleNextStep}>
+          <button
+            className="next-button"
+            onClick={handleNextStep}
+            disabled={!tweetPosted} // Disable button until user posts on Twitter
+          >
             I’ve Completed This Step
           </button>
         </div>
