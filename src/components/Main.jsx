@@ -117,7 +117,7 @@ const Main = ({ onLogout }) => {
       console.log("Completing all phases...");
       await saveUserCompletion(); // Save the user to Firestore
       console.log("User data saved to Firestore.");
-      setPopupMessage("Hurray! You've completed all phases!");
+      setPopupMessage("Slayyy! You've completed the quest!");
       setShowPopup(true);
     } catch (error) {
       console.error("Error completing all phases:", error);
@@ -199,7 +199,9 @@ const Main = ({ onLogout }) => {
                     className="post-button"
                     onClick={() =>
                       redirectToTwitter(`Met $brunette ${creator.gen === "m" ? "King" : "Queen"} @${creator.username}! at pump me up, buttercup today 💅🏽✨`, creator.name)
+
                     }
+                    style={{fontSize:"0.5em"}}
                   >
                     Post Selfie
                   </button> 
@@ -269,7 +271,7 @@ const Main = ({ onLogout }) => {
       return (
         <div style={{marginBottom:"10em"}}>
           <h2>Slayyyyy!!!!</h2>
-          <p>You are now entered for our 50 Million <strong>$Brunette</strong> grand prize!</p>
+          <p>You are now entered for our 50 Million <strong>$brunette</strong> grand prize!</p>
         </div>
       );
     }
