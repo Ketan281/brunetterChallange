@@ -12,6 +12,7 @@ import wafu from "../assets/wafu.jpg"
 import harsh from "../assets/harsh.jpg"
 import deepakshi from "../assets/deepakshi.jpg"
 import gayatri from "../assets/gayatri.jpg"
+import live from "../assets.live.jpg"
 // Initialize Firestore
 const db = getFirestore();
 
@@ -210,9 +211,18 @@ const Main = ({ onLogout }) => {
     } else if (step === 3) {
       return (
         <div className="phase-content">
-          <h2>Phase 3: Support Living Artists</h2>
+          <h2>Step 3: Support Living Artists</h2>
           <p>Post a video or photo with the hashtag <strong>#SupportLivingArtists</strong> on X.</p>
           <p>We’ve got some fun hidden Augmented Reality Easter eggs in our merch! Spot the ‘Support Living Artists’ message and post something with the AR!</p>
+          <div style={{display:"grid",placeItems:"center"}}>
+          <img 
+          src={live}
+          height={100}
+          width={100}
+          alt="live"
+          
+          />
+          </div>
           <button
             className="next-button"
             onClick={() =>
