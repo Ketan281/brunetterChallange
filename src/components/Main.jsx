@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 import Papa from "papaparse";
 import g from "../assets/rakshita.jpg";
+import rakshita from "../assets/rakshita1.jpg";
 import b from "../assets/angad.jpg";
 import angad from "../assets/angad1.jpg";
 import wafu from "../assets/wafu.jpg"
@@ -44,7 +45,7 @@ const Main = ({ onLogout }) => {
   }, [navigate]);
 
   const creators = [
-    { name: "Awkquarian", bio: "Awkquarian is a digital artist, web3 creator and the founder of $brunette coin.", photo: g,gen:"f",username:"rakshitaphilip" },
+    { name: "Awkquarian", bio: "Awkquarian is a digital artist, web3 creator and the founder of $brunette coin.", photo: rakshita,gen:"f",username:"rakshitaphilip" },
     { name: "Angad", bio: "Angad plays at the intersection of art & technology. He’s the co-founder of COI NFT, set up India’s 1st NFT Gallery, is working on an “ethical vandalism” street art campaign with AR and is obsessed with artist empowerment and storytelling through tech. Talk to him about the Support Living Artists campaign.", photo: angad,gen:"m",username:"angadbsodhi" },
     { name: "Abverse", bio: "Abhishek Bhaskar is a beatboxer, 3D digital artist and award-winning architect from India. He’s best known for creating Metavoice, the world’s first beatboxing generated digital art and he’s also here as your emcee for the night.", photo: b,gen:"m",username:"iamabverse" },
     { name: "Deepakshi", bio: "Deepakshi is an illustrator from Chandigarh. She’s an animal lover best known for her whimsical bunny collection called Nom Nom. Her NFTs have earned her thousands, most of which she’s donated to animal welfare NGOs.", photo: deepakshi,gen:"f",username:"deepakshi_eth" },
@@ -165,8 +166,8 @@ const Main = ({ onLogout }) => {
     } else if (step === 2) {
       return (
         <div className="phase-content">
-          <h2>Phase 2: Eligibility for Grand Prize of 10 Million $Brunette</h2>
-          <p>Quest: Interact with our creators and get a #ProofOfBrunette selfie with any 3 of the following creators:</p>
+          <h2>STEP 2: Be eligible to win a grand prize of $50 million</h2>
+          <p>Find any three of our $brunette creators here, post a selfie with them on X and tag us 💅🏽✨</p>
           <ul className="creator-list">
             {creators.map((creator) => (
               <li key={creator.name} className="creator-item">
