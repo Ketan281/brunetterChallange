@@ -220,6 +220,9 @@ const Main = ({ onLogout }) => {
               setShowPopup(true);
             }}
             disabled={selectedCreators.length < 3}
+            style={{
+                marginTop:"3em"
+            }}
           >
             Completed This Step
           </button>
@@ -245,12 +248,18 @@ const Main = ({ onLogout }) => {
             onClick={() =>
               redirectToTwitter("Supporting living artists! Here’s my photo/video. #SupportLivingArtists")
             }
+            style={{
+                margin:"2.5em"
+            }}
           >
             Post on X
           </button>
           <button
             className="download-csv-button"
             onClick={() => completeAllPhases()}
+            style={{
+                margin:"2.5em"
+            }}
           >
             Completed This Step
           </button>
