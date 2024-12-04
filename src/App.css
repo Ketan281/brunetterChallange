@@ -6,7 +6,12 @@
 }
 
 /* Import funky fonts from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Caveat:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@font-face {
+  font-family: "Bangers";
+  src:url('./fonts/Bangers/Bangers-Regular.ttf') format('truetype');
+  font-display: swap;
+}
 
 /* General body styling */
 body {
@@ -97,7 +102,7 @@ body {
   height: 100vh;
   background: linear-gradient(to bottom, #e865c5, #1d0511);
   color: white;
-  font-family: "Inter", Arial, sans-serif;
+  font-family: "Bangers", cursive;
   padding: 1rem;
 }
 
