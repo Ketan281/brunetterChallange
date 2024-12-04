@@ -224,19 +224,28 @@ p {
 .creator-list {
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin: 0 auto; /* Center-align the list */
+  display: flex;
+  flex-wrap: wrap; /* Allow items to wrap on smaller screens */
+  justify-content: center; /* Center items within the container */
+  gap: 1rem; /* Add spacing between items */
+  max-width: 100%; /* Prevent overflow */
 }
 
 .creator-item {
   background: rgba(255, 255, 255, 0.1);
   padding: 1rem;
   border-radius: 10px;
-  margin-bottom: 1rem;
+  flex: 1 1 calc(100% - 2rem); /* Ensure full width on smaller screens */
+  max-width: 300px; /* Limit width on larger screens */
   display: flex;
   flex-direction: column;
   align-items: center;
   color: white;
   position: relative;
+  text-align: center;
+  margin: 0 auto; /* Center items */
+  box-sizing: border-box;
 }
 
 .creator-header {
@@ -247,17 +256,19 @@ p {
 }
 
 .creator-photo {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
   border: 2px solid white;
+  margin-bottom: 0.5rem;
 }
 
 .creator-name {
   font-size: 1.2rem;
   font-weight: bold;
-  margin: 0 1rem;
+  margin-bottom: 0.5rem;
 }
+
 
 .bio-toggle {
   background: none;
@@ -275,7 +286,7 @@ p {
 .creator-bio {
   margin-top: 0.5rem;
   font-size: 0.9rem;
-  text-align: left;
+  text-align: center;
   background: rgba(0, 0, 0, 0.5);
   padding: 0.5rem;
   border-radius: 5px;
@@ -388,7 +399,10 @@ p {
   .login-card {
     width: 100%;
   }
-
+  .creator-item {
+    flex: 1 1 calc(50% - 1rem); /* Two items per row on tablets */
+    max-width: 100%; /* Full width if needed */
+  }
   .creator-photo {
     width: 40px;
     height: 40px;
@@ -413,7 +427,20 @@ p {
     padding: 0.5rem 1rem;
   }
 
+  .creator-item {
+    flex: 1 1 100%; /* Single column layout on smaller screens */
+  }
+
+  .creator-photo {
+    width: 50px;
+    height: 50px;
+  }
+
   .creator-name {
-    font-size: 0.9rem;
+    font-size: 1rem;
+  }
+
+  .creator-bio {
+    font-size: 0.8rem;
   }
 }

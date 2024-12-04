@@ -175,14 +175,14 @@ const Main = ({ onLogout }) => {
               <li key={creator.name} className="creator-item">
                 <div className="creator-header">
                   <img src={creator.photo} alt={creator.name} className="creator-photo" />
-                  <span className="creator-name">{creator.name}({creator.username})</span>
+                  <span className="creator-name">{creator.name}</span>
                   <button className="bio-toggle" onClick={() => toggleBio(creator.name)}>
                     {showBio === creator.name ? "Hide Bio" : "View Bio"}
                   </button> 
                   <button
                     className="post-button"
                     onClick={() =>
-                      redirectToTwitter(`Met $brunette ${creator.gen === "m" ? "King" : "Queen"} ${creator.name}! at pump me up, buttercup today 💅🏽✨`, creator.name)
+                      redirectToTwitter(`Met $brunette ${creator.gen === "m" ? "King" : "Queen"} @${creator.username}! at pump me up, buttercup today 💅🏽✨`, creator.name)
                     }
                   >
                     Post Selfie
