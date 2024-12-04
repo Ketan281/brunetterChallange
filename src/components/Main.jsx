@@ -13,6 +13,7 @@ import harsh from "../assets/harsh.jpg"
 import deepakshi from "../assets/deepakshi.jpg"
 import gayatri from "../assets/gayatri.jpg"
 import live from "../assets/live.jpg"
+import abverse from "../assets/abverse.jpg"
 // Initialize Firestore
 const db = getFirestore();
 
@@ -48,7 +49,7 @@ const Main = ({ onLogout }) => {
   const creators = [
     { name: "Awkquarian", bio: "Awkquarian is a digital artist, web3 creator and the founder of $brunette coin.", photo: rakshita,gen:"f",username:"rakshitaphilip" },
     { name: "Angad", bio: "Angad plays at the intersection of art & technology. He’s the co-founder of COI NFT, set up India’s 1st NFT Gallery, is working on an “ethical vandalism” street art campaign with AR and is obsessed with artist empowerment and storytelling through tech. Talk to him about the Support Living Artists campaign.", photo: angad,gen:"m",username:"angadbsodhi" },
-    { name: "Abverse", bio: "Abhishek Bhaskar is a beatboxer, 3D digital artist and award-winning architect from India. He’s best known for creating Metavoice, the world’s first beatboxing generated digital art and he’s also here as your emcee for the night.", photo: b,gen:"m",username:"iamabverse" },
+    { name: "Abverse", bio: "Abhishek Bhaskar is a beatboxer, 3D digital artist and award-winning architect from India. He’s best known for creating Metavoice, the world’s first beatboxing generated digital art and he’s also here as your emcee for the night.", photo: abverse,gen:"m",username:"iamabverse" },
     { name: "Deepakshi", bio: "Deepakshi is an illustrator from Chandigarh. She’s an animal lover best known for her whimsical bunny collection called Nom Nom. Her NFTs have earned her thousands, most of which she’s donated to animal welfare NGOs.", photo: deepakshi,gen:"f",username:"deepakshi_eth" },
     { name: "Wafu", bio: "Dr Wafu, the artist so controversial, that he never leaves home without a mask! Ask him why? ", photo: wafu,gen:"m",username:"wafudraws" },
     { name: "Harsh", bio: "Harsh is a newbie to web3 and is trying to bring off chain creators onchain. p.s. he’s CTO of Qyuki our sponsors for tonight! 😜", photo: harsh,gen:"b",username:"0xSongra" },
