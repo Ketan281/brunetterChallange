@@ -152,7 +152,7 @@ const Main = ({ onLogout }) => {
             className="download-csv-button"
             onClick={() => redirectToTwitter("Proof of $brunette at Pump me up, Buttercup with @brunettesonli @coi_nft 💕")}
             style={{
-                marginRight:"2.5em"
+                margin:"2.5em"
             }}
           >
             Post on X
@@ -164,7 +164,7 @@ const Main = ({ onLogout }) => {
               setShowPopup(true);
             }}
             style={{
-                marginLeft:"2.5em"
+                margin:"2.5em"
             }}
           >
             Completed This Step
