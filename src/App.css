@@ -339,3 +339,39 @@ p {
 .popup-cancel-button:hover {
   background-color: #0056b3;
 }
+.download-csv-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.download-csv-button {
+  background: linear-gradient(135deg, #ff7eb3, #ff758c);
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.download-csv-button:hover {
+  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.download-csv-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.download-csv-button:focus {
+  outline: none;
+  box-shadow: 0 0 4px 2px rgba(255, 117, 140, 0.5);
+}
+

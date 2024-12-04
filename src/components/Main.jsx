@@ -2,17 +2,22 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signOut } from "firebase/auth";
 import { toast } from "react-toastify";
+import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
+import Papa from "papaparse";
 import g from "../assets/rakshita.jpg";
 import b from "../assets/angad.jpg";
 
+// Initialize Firestore
+const db = getFirestore();
+
 const Main = ({ onLogout }) => {
   const [user, setUser] = useState(null);
-  const [step, setStep] = useState(1); // Step tracking
-  const [completedPhases, setCompletedPhases] = useState([]);
-  const [selectedCreators, setSelectedCreators] = useState([]);
-  const [showBio, setShowBio] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
-  const [popupMessage, setPopupMessage] = useState("");
+  const [step, setStep] = useState(1); // Step tracking for multi-phase flow
+  const [completedPhases, setCompletedPhases] = useState([]); // Track completed phases
+  const [selectedCreators, setSelectedCreators] = useState([]); // Track selected creators for Step 2
+  const [showBio, setShowBio] = useState(null); // Control which bio is shown
+  const [showPopup, setShowPopup] = useState(false); // Show the "Thanks for posting" popup
+  const [popupMessage, setPopupMessage] = useState(""); // Message in the popup
 
   const navigate = useNavigate();
 
@@ -35,13 +40,13 @@ const Main = ({ onLogout }) => {
   }, [navigate]);
 
   const creators = [
-    { name: "Rakshita", bio: "Digital artist specializing in NFT designs.", photo: g },
-    { name: "Angad", bio: "Developer and NFT enthusiast.", photo: b },
-    { name: "Abverse", bio: "Creates unique 3D art.", photo: b },
-    { name: "Deepakshi", bio: "AI researcher and digital creator.", photo: g },
-    { name: "Wafu", bio: "Cartoonist known for quirky characters.", photo: b },
-    { name: "Harsh", bio: "Specializes in generative art.", photo: b },
-    { name: "Gayatri", bio: "Award-winning photographer.", photo: g },
+    { name: "Rakshita", bio: "Rakshita is a talented digital artist specializing in NFT designs.", photo: g },
+    { name: "Angad", bio: "Angad is a developer and NFT enthusiast with a knack for blockchain tech.", photo: b },
+    { name: "Abverse", bio: "Abverse creates unique 3D art and immersive metaverse experiences.", photo: b },
+    { name: "Deepakshi", bio: "Deepakshi is an AI researcher and digital creator with a passion for community building.", photo: g },
+    { name: "Wafu", bio: "Wafu is a cartoonist and illustrator known for quirky, lovable characters.", photo: b },
+    { name: "Harsh", bio: "Harsh specializes in generative art and pushing the boundaries of creative coding.", photo: b },
+    { name: "Gayatri", bio: "Gayatri is an award-winning photographer capturing vibrant stories through her lens.", photo: g },
   ];
 
   const handleLogout = async () => {
@@ -49,17 +54,22 @@ const Main = ({ onLogout }) => {
     try {
       await signOut(auth);
       localStorage.removeItem("user");
-      onLogout();
+      onLogout(); // Update App state
     } catch (error) {
-      toast.error("Failed to log out. Please try again!");
+      console.error("Error during logout:", error);
+      toast.error("Failed to log out. Please try again!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
     }
   };
 
   const redirectToTwitter = (postText, creatorName = null) => {
     const twitterText = encodeURIComponent(postText);
     const twitterUrl = `https://twitter.com/intent/tweet?text=${twitterText}`;
-    window.open(twitterUrl, "_blank");
+    window.open(twitterUrl, "_blank"); // Opens Twitter in a new tab
 
+    // Automatically mark the creator as selected if provided
     if (creatorName) {
       setSelectedCreators((prev) =>
         prev.includes(creatorName) ? prev : [...prev, creatorName]
@@ -77,11 +87,52 @@ const Main = ({ onLogout }) => {
     localStorage.setItem("completedPhases", JSON.stringify(savedPhases));
 
     setStep((prevStep) => prevStep + 1); // Move to the next phase
-    setShowPopup(false);
+    setShowPopup(false); // Hide the popup
+  };
+
+  const saveUserCompletion = async () => {
+    try {
+      await addDoc(collection(db, "completedUsers"), {
+        email: user.email,
+        name: user.name,
+        timestamp: new Date().toISOString(),
+      });
+      console.log("User data saved to Firestore.");
+    } catch (error) {
+      console.error("Error saving user data:", error);
+    }
+  };
+
+  const completeAllPhases = () => {
+    saveUserCompletion(); // Save user data to Firestore
+    setPopupMessage("Hurray! You've completed all phases!");
+    setShowPopup(true);
   };
 
   const toggleBio = (creator) => {
-    setShowBio(showBio === creator ? null : creator);
+    setShowBio(showBio === creator ? null : creator); // Toggle bio visibility
+  };
+
+  const downloadCSV = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(db, "completedUsers"));
+      const userData = querySnapshot.docs.map((doc) => doc.data());
+
+      // Convert user data to CSV
+      const csvData = Papa.unparse(userData);
+      const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+
+      // Create a download link
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "completed_users.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading CSV:", error);
+    }
   };
 
   const renderStepContent = () => {
@@ -89,7 +140,7 @@ const Main = ({ onLogout }) => {
       return (
         <div className="phase-content">
           <h2>Phase 1: Eligibility for Merch</h2>
-          <p>Post a selfie with the hashtag: <strong>#ProofOf$Brunette</strong> on X.</p>
+          <p>To proceed, post a selfie with the hashtag: <strong>#ProofOf$Brunette</strong> on X.</p>
           <button
             className="next-button"
             onClick={() => redirectToTwitter("Proof of brunette selfie (On X). #Proofof$Brunette")}
@@ -110,8 +161,8 @@ const Main = ({ onLogout }) => {
     } else if (step === 2) {
       return (
         <div className="phase-content">
-          <h2>Phase 2: Eligibility for Grand Prize</h2>
-          <p>Interact with our creators and get a selfie with any 3 creators:</p>
+          <h2>Phase 2: Eligibility for Grand Prize of 10 Million $Brunette</h2>
+          <p>Quest: Interact with our creators and get a #ProofOfBrunette selfie with any 3 of the following creators:</p>
           <ul className="creator-list">
             {creators.map((creator) => (
               <li key={creator.name} className="creator-item">
@@ -166,10 +217,7 @@ const Main = ({ onLogout }) => {
           </button>
           <button
             className="next-button"
-            onClick={() => {
-              setPopupMessage("Thanks for posting!");
-              setShowPopup(true);
-            }}
+            onClick={() => completeAllPhases()}
           >
             Completed This Step
           </button>
@@ -179,7 +227,7 @@ const Main = ({ onLogout }) => {
       return (
         <div className="hurray-screen">
           <h2>Hurray!</h2>
-          <p>You are now entered for our grand prize!</p>
+          <p>You are now entered for our 10 Million <strong>$Brunette</strong> grand prize!</p>
         </div>
       );
     }
@@ -206,13 +254,21 @@ const Main = ({ onLogout }) => {
           </ul>
         </div>
         {renderStepContent()}
+        <div className="download-csv-container">
+          <button onClick={downloadCSV} className="download-csv-button">
+            Download Completed Users CSV
+          </button>
+        </div>
       </div>
 
+      {/* Popup */}
       {showPopup && (
         <div className="popup-overlay">
           <div className="popup-content">
             <h2>{popupMessage}</h2>
-            <button className="popup-cancel-button" onClick={completePhase}>Proceed</button>
+            <button className="popup-cancel-button" onClick={completePhase}>
+              Proceed
+            </button>
           </div>
         </div>
       )}
