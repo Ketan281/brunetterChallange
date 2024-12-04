@@ -25,7 +25,12 @@ const Main = ({ onLogout }) => {
 
       // Load completed phases from localStorage
       const savedPhases = JSON.parse(localStorage.getItem("completedPhases")) || {};
-      setCompletedPhases(savedPhases[storedUser.email] || []);
+      const userPhases = savedPhases[storedUser.email] || [];
+      setCompletedPhases(userPhases);
+
+      // Determine the next step based on completed phases
+      const nextStep = userPhases.length + 1; // If Phase 1 completed, move to Phase 2
+      setStep(nextStep);
     }
   }, [navigate]);
 
