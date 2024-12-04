@@ -263,12 +263,12 @@ const Main = ({ onLogout }) => {
       </nav>
       <div className="main-content">
         <div className="completed-phases">
-          <h3>Completed Phases:</h3>
+          {/* <h3>Completed Phases:</h3>
           <ul>
             {completedPhases.map((phase) => (
               <li key={phase}>Phase {phase}</li>
             ))}
-          </ul>
+          </ul> */}
         </div>
         {renderStepContent()}
         <div className="download-csv-container">
