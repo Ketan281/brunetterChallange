@@ -242,8 +242,8 @@ const Main = ({ onLogout }) => {
     } else {
       return (
         <div className="hurray-screen">
-          <h2>Hurray!</h2>
-          <p>You are now entered for our 10 Million <strong>$Brunette</strong> grand prize!</p>
+          <h2>Slayyyyy!!!!</h2>
+          <p>You are now entered for our 50 Million <strong>$Brunette</strong> grand prize!</p>
         </div>
       );
     }
