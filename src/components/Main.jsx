@@ -40,13 +40,13 @@ const Main = ({ onLogout }) => {
   }, [navigate]);
 
   const creators = [
-    { name: "Rakshita", bio: "Rakshita is a talented digital artist specializing in NFT designs.", photo: g,gen:"f" },
-    { name: "Angad", bio: "Angad is a developer and NFT enthusiast with a knack for blockchain tech.", photo: b,gen:"m" },
-    { name: "Abverse", bio: "Abverse creates unique 3D art and immersive metaverse experiences.", photo: b,gen:"m" },
-    { name: "Deepakshi", bio: "Deepakshi is an AI researcher and digital creator with a passion for community building.", photo: g,gen:"f" },
-    { name: "Wafu", bio: "Wafu is a cartoonist and illustrator known for quirky, lovable characters.", photo: b,gen:"m" },
-    { name: "Harsh", bio: "Harsh specializes in generative art and pushing the boundaries of creative coding.", photo: b,gen:"b" },
-    { name: "Gayatri", bio: "Gayatri is an award-winning photographer capturing vibrant stories through her lens.", photo: g,gen:"f" },
+    { name: "Awkquarian", bio: "Awkquarian is a digital artist, web3 creator and the founder of $brunette coin.", photo: g,gen:"f",username:"rakshitaphilip" },
+    { name: "Angad", bio: "Angad plays at the intersection of art & technology. He’s the co-founder of COI NFT, set up India’s 1st NFT Gallery, is working on an “ethical vandalism” street art campaign with AR and is obsessed with artist empowerment and storytelling through tech. Talk to him about the Support Living Artists campaign.", photo: b,gen:"m",username:"angadbsodhi" },
+    { name: "Abverse", bio: "Abhishek Bhaskar is a beatboxer, 3D digital artist and award-winning architect from India. He’s best known for creating Metavoice, the world’s first beatboxing generated digital art and he’s also here as your emcee for the night.", photo: b,gen:"m",username:"iamabverse" },
+    { name: "Deepakshi", bio: "Deepakshi is an illustrator from Chandigarh. She’s an animal lover best known for her whimsical bunny collection called Nom Nom. Her NFTs have earned her thousands, most of which she’s donated to animal welfare NGOs.", photo: g,gen:"f",username:"deepakshi_eth" },
+    { name: "Wafu", bio: "Dr Wafu, the artist so controversial, that he never leaves home without a mask! Ask him why? ", photo: b,gen:"m",username:"wafudraws" },
+    { name: "Harsh", bio: "Harsh is a newbie to web3 and is trying to bring off chain creators onchain. p.s. he’s CTO of Qyuki our sponsors for tonight! 😜", photo: b,gen:"b",username:"0xSongra" },
+    { name: "Gayatri", bio: "Gayatri is a Based BuildHer and Web3 native creator who joined the space just 6 months ago. In this short time, she’s won multiple Base hackathons and minted over 9k NFTs from her collection, Base Colours.", photo: g,gen:"f",username:"gayatri_gt" },
   ];
 
   const handleLogout = async () => {
@@ -139,11 +139,11 @@ const Main = ({ onLogout }) => {
     if (step === 1) {
       return (
         <div className="phase-content">
-          <h2>Phase 1: Eligibility for Merch</h2>
-          <p>To proceed, post a selfie with the hashtag: <strong>#ProofOf$Brunette</strong> on X.</p>
+          <h2>STEP 1: To claim some cutesy merch</h2>
+          <p>Post your proof of $brunette on X and tag us</p>
           <button
             className="next-button"
-            onClick={() => redirectToTwitter("1. Proof of $brunette at Pump me up, Buttercup 💕")}
+            onClick={() => redirectToTwitter("Proof of $brunette at Pump me up, Buttercup with @brunettesonli @coi_nft 💕")}
           >
             Post on X
           </button>
@@ -168,7 +168,7 @@ const Main = ({ onLogout }) => {
               <li key={creator.name} className="creator-item">
                 <div className="creator-header">
                   <img src={creator.photo} alt={creator.name} className="creator-photo" />
-                  <span className="creator-name">{creator.name}</span>
+                  <span className="creator-name">{creator.name}({creator.username})</span>
                   <button className="bio-toggle" onClick={() => toggleBio(creator.name)}>
                     {showBio === creator.name ? "Hide Bio" : "View Bio"}
                   </button>
@@ -179,7 +179,7 @@ const Main = ({ onLogout }) => {
                     }
                   >
                     Post Selfie
-                  </button>
+                  </button> 
                   <input
                     type="checkbox"
                     checked={selectedCreators.includes(creator.name)}
@@ -207,6 +207,7 @@ const Main = ({ onLogout }) => {
         <div className="phase-content">
           <h2>Phase 3: Support Living Artists</h2>
           <p>Post a video or photo with the hashtag <strong>#SupportLivingArtists</strong> on X.</p>
+          <p>We’ve got some fun hidden Augmented Reality Easter eggs in our merch! Spot the ‘Support Living Artists’ message and post something with the AR!</p>
           <button
             className="next-button"
             onClick={() =>
