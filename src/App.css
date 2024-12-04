@@ -104,7 +104,7 @@ body {
   min-height: 100vh;
   background: linear-gradient(to bottom, #e865c5, #1d0511);
   color: white;
-  font-family: "Bangers", cursive;
+  font-family: "Bangers", "Caveat", cursive; /* Funky fonts */
   padding: 1rem;
 }
 
