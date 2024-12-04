@@ -99,22 +99,32 @@ const Main = ({ onLogout }) => {
 
   const saveUserCompletion = async () => {
     try {
+      console.log("Attempting to save user data...");
       await addDoc(collection(db, "completedUsers"), {
         email: user.email,
         name: user.name,
         timestamp: new Date().toISOString(),
       });
-      console.log("User data saved to Firestore.");
+      console.log("User data successfully saved.");
     } catch (error) {
-      console.error("Error saving user data:", error);
+      console.error("Error saving user data to Firestore:", error);
     }
   };
+  
   console.log(":::")
-  const completeAllPhases = () => {
-    saveUserCompletion(); // Save user data to Firestore
-    setPopupMessage("Hurray! You've completed all phases!");
-    setShowPopup(true);
+  const completeAllPhases = async () => {
+    try {
+      console.log("Completing all phases...");
+      await saveUserCompletion(); // Save the user to Firestore
+      console.log("User data saved to Firestore.");
+      setPopupMessage("Hurray! You've completed all phases!");
+      setShowPopup(true);
+    } catch (error) {
+      console.error("Error completing all phases:", error);
+      toast.error("Failed to save user completion. Please try again.");
+    }
   };
+  
 
   const toggleBio = (creator) => {
     setShowBio(showBio === creator ? null : creator); // Toggle bio visibility
