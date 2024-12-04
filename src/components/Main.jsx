@@ -149,13 +149,13 @@ const Main = ({ onLogout }) => {
           <h2>STEP 1: To claim some cutesy merch</h2>
           <p>Post your proof of $brunette on X and tag us</p>
           <button
-            className="next-button"
+            className="download-csv-button"
             onClick={() => redirectToTwitter("Proof of $brunette at Pump me up, Buttercup with @brunettesonli @coi_nft 💕")}
           >
             Post on X
           </button>
           <button
-            className="next-button"
+            className="download-csv-button"
             onClick={() => {
               setPopupMessage("Thanks for posting!");
               setShowPopup(true);
@@ -198,7 +198,7 @@ const Main = ({ onLogout }) => {
             ))}
           </ul>
           <button
-            className="next-button"
+            className="download-csv-button"
             onClick={() => {
               setPopupMessage("Thanks for posting!");
               setShowPopup(true);
@@ -225,7 +225,7 @@ const Main = ({ onLogout }) => {
           />
           </div>
           <button
-            className="next-button"
+            className="download-csv-button"
             onClick={() =>
               redirectToTwitter("Supporting living artists! Here’s my photo/video. #SupportLivingArtists")
             }
@@ -233,7 +233,7 @@ const Main = ({ onLogout }) => {
             Post on X
           </button>
           <button
-            className="next-button"
+            className="download-csv-button"
             onClick={() => completeAllPhases()}
           >
             Completed This Step
@@ -271,11 +271,11 @@ const Main = ({ onLogout }) => {
           </ul> */}
         </div>
         {renderStepContent()}
-        <div className="download-csv-container">
+        {/* <div className="download-csv-container">
           <button onClick={downloadCSV} className="download-csv-button">
             Download Completed Users CSV
           </button>
-        </div>
+        </div> */}
       </div>
 
       {/* Popup */}
