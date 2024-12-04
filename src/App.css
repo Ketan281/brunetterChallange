@@ -104,7 +104,7 @@ body {
   min-height: 100vh;
   background: linear-gradient(to bottom, #e865c5, #1d0511);
   color: white;
-  font-family: "Bangers", "Caveat", cursive; /* Funky fonts */
+  
   padding: 1rem;
 }
 
@@ -164,12 +164,12 @@ body {
   align-items: center;
   text-align: center;
   padding: 2rem;
-  font-family: "Bangers", cursive; /* Funky bold font */
+ 
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .phase-content h2 {
-  font-family: "Caveat", cursive; /* Funky handwritten font */
+  
   font-size: 1.8rem;
   margin-bottom: 1rem;
 }
@@ -197,7 +197,7 @@ body {
   border: none;
   border-radius: 30px;
   font-size: 1.2rem;
-  font-family: "Bangers", cursive; /* Funky button font */
+  
   cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   margin: 2rem;
@@ -215,7 +215,7 @@ body {
 .phase-content {
   text-align: center;
   color: white;
-  font-family: "Inter", sans-serif;
+ 
 }
 
 h2 {
