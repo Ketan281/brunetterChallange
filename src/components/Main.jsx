@@ -40,13 +40,13 @@ const Main = ({ onLogout }) => {
   }, [navigate]);
 
   const creators = [
-    { name: "Rakshita", bio: "Rakshita is a talented digital artist specializing in NFT designs.", photo: g },
-    { name: "Angad", bio: "Angad is a developer and NFT enthusiast with a knack for blockchain tech.", photo: b },
-    { name: "Abverse", bio: "Abverse creates unique 3D art and immersive metaverse experiences.", photo: b },
-    { name: "Deepakshi", bio: "Deepakshi is an AI researcher and digital creator with a passion for community building.", photo: g },
-    { name: "Wafu", bio: "Wafu is a cartoonist and illustrator known for quirky, lovable characters.", photo: b },
-    { name: "Harsh", bio: "Harsh specializes in generative art and pushing the boundaries of creative coding.", photo: b },
-    { name: "Gayatri", bio: "Gayatri is an award-winning photographer capturing vibrant stories through her lens.", photo: g },
+    { name: "Rakshita", bio: "Rakshita is a talented digital artist specializing in NFT designs.", photo: g,gen:"f" },
+    { name: "Angad", bio: "Angad is a developer and NFT enthusiast with a knack for blockchain tech.", photo: b,gen:"m" },
+    { name: "Abverse", bio: "Abverse creates unique 3D art and immersive metaverse experiences.", photo: b,gen:"m" },
+    { name: "Deepakshi", bio: "Deepakshi is an AI researcher and digital creator with a passion for community building.", photo: g,gen:"f" },
+    { name: "Wafu", bio: "Wafu is a cartoonist and illustrator known for quirky, lovable characters.", photo: b,gen:"m" },
+    { name: "Harsh", bio: "Harsh specializes in generative art and pushing the boundaries of creative coding.", photo: b,gen:"b" },
+    { name: "Gayatri", bio: "Gayatri is an award-winning photographer capturing vibrant stories through her lens.", photo: g,gen:"f" },
   ];
 
   const handleLogout = async () => {
@@ -143,7 +143,7 @@ const Main = ({ onLogout }) => {
           <p>To proceed, post a selfie with the hashtag: <strong>#ProofOf$Brunette</strong> on X.</p>
           <button
             className="next-button"
-            onClick={() => redirectToTwitter("Proof of brunette selfie (On X). #Proofof$Brunette")}
+            onClick={() => redirectToTwitter("1. Proof of $brunette at Pump me up, Buttercup 💕")}
           >
             Post on X
           </button>
@@ -175,7 +175,7 @@ const Main = ({ onLogout }) => {
                   <button
                     className="post-button"
                     onClick={() =>
-                      redirectToTwitter(`#ProofOfBrunette Selfie with ${creator.name}!`, creator.name)
+                      redirectToTwitter(`Met $brunette ${creator.gen === "m" ? "King" : "Queen"} ${creator.name}! at pump me up, buttercup today 💅🏽✨`, creator.name)
                     }
                   >
                     Post Selfie

@@ -50,11 +50,11 @@ const Login = ({ onLogin }) => {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container" style={{marginTop:"2em"}}>
       <div className="login-card">
         <div className="login-header">
-          <h1>Welcome Back!</h1>
-          <p>Log in to access your personalized dashboard.</p>
+          <h1>Welcome to pump it up, buttercup! 💅🏽✨</h1>
+          <p>Connect your X account to start questing with us ✨</p>
         </div>
         <button onClick={handleLogin} disabled={loading} className="login-button">
           <img src={X} alt="Twitter" />
