@@ -17,7 +17,7 @@
 body {
   margin: 0;
   font-family: "Bangers", "Caveat", cursive; /* Funky fonts */
-  background: linear-gradient(to bottom, #e865c5, #1d0511);
+  background: linear-gradient( #e865c5, #1d0511);
   color: white;
   display: flex;
   flex-direction: column;
