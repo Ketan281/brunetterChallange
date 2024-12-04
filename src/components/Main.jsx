@@ -12,7 +12,7 @@ import wafu from "../assets/wafu.jpg"
 import harsh from "../assets/harsh.jpg"
 import deepakshi from "../assets/deepakshi.jpg"
 import gayatri from "../assets/gayatri.jpg"
-import live from "../assets.live.jpg"
+import live from "../assets/live.jpg"
 // Initialize Firestore
 const db = getFirestore();
 
@@ -177,7 +177,7 @@ const Main = ({ onLogout }) => {
                   <span className="creator-name">{creator.name}({creator.username})</span>
                   <button className="bio-toggle" onClick={() => toggleBio(creator.name)}>
                     {showBio === creator.name ? "Hide Bio" : "View Bio"}
-                  </button>
+                  </button> 
                   <button
                     className="post-button"
                     onClick={() =>
