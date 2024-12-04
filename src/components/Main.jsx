@@ -25,6 +25,7 @@ const Main = ({ onLogout }) => {
       setUser(storedUser)
     }
   }, [])
+  console.log("yess");
   const creators = [
     { name: "Rakshita", bio: "Rakshita is a talented digital artist specializing in NFT designs.", photo: g },
     { name: "Angad", bio: "Angad is a developer and NFT enthusiast with a knack for blockchain tech.", photo: b },
