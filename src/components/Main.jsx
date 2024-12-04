@@ -102,7 +102,7 @@ const Main = ({ onLogout }) => {
       console.error("Error saving user data:", error);
     }
   };
-
+  console.log(":::")
   const completeAllPhases = () => {
     saveUserCompletion(); // Save user data to Firestore
     setPopupMessage("Hurray! You've completed all phases!");
