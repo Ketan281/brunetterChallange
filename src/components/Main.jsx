@@ -242,7 +242,7 @@ const Main = ({ onLogout }) => {
       );
     } else {
       return (
-        <div className="hurray-screen">
+        <div style={{marginBottom:"10em"}}>
           <h2>Slayyyyy!!!!</h2>
           <p>You are now entered for our 50 Million <strong>$Brunette</strong> grand prize!</p>
         </div>

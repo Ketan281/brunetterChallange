@@ -28,7 +28,7 @@ const App = () => {
     <div>
       <ToastContainer />
       <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <img src={logo} height={80} alt="logo" />
+        <img src={logo} height={80} alt="logo" onClick={()=>localStorage.clear()}/>
       </div>
       <Routes>
         <Route
