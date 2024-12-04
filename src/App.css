@@ -101,7 +101,7 @@ body {
 .main-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
   background: linear-gradient(to bottom, #e865c5, #1d0511);
   color: white;
   font-family: "Bangers", cursive;
