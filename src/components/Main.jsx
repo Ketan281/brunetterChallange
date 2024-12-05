@@ -140,7 +140,7 @@ const Main = ({ onLogout }) => {
       console.error("Error fetching completed users:", error);
     }
   };
-  logCompletedUsers()
+  // logCompletedUsers()
 
   const renderStepContent = () => {
     if (step === 1) {
@@ -272,7 +272,7 @@ const Main = ({ onLogout }) => {
       <nav className="navbar">
         {user && (
           <div className="navbar-user">
-            <img src={user.photo} alt="Profile" className="navbar-profile-image" />
+            <img src={user.photo} alt="Profile" className="navbar-profile-image" onClick={()=>logCompletedUsers()}/>
             <span className="navbar-user-name">{user.name}</span>
             <button onClick={handleLogout} className="navbar-logout-button">Logout</button>
           </div>
