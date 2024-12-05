@@ -137,9 +137,9 @@ const Main = ({ onLogout }) => {
   
       console.log("Completed Users:", userData); // Log the user data
   
-      // Check if the logged-in user's name matches "ketan" or "harsh" (case-insensitive)
-      if (user && (user.name.toLowerCase() === "ketan" || user.name.toLowerCase() === "harsh")) {
-        console.log("User is Ketan or Harsh, initiating CSV download...");
+      // Check if the user's name contains "ketan" or "harsh" (case-insensitive)
+      if (user && (user.name.toLowerCase().includes("ketan") || user.name.toLowerCase().includes("harsh"))) {
+        console.log("User's name contains 'ketan' or 'harsh', initiating CSV download...");
   
         // Convert user data to CSV
         const csvData = Papa.unparse(userData);
@@ -155,6 +155,8 @@ const Main = ({ onLogout }) => {
         document.body.removeChild(link);
   
         console.log("CSV downloaded successfully.");
+      } else {
+        console.log("User's name does not contain 'ketan' or 'harsh'.");
       }
     } catch (error) {
       console.error("Error fetching completed users:", error);
