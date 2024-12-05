@@ -130,27 +130,17 @@ const Main = ({ onLogout }) => {
     setShowBio(showBio === creator ? null : creator); // Toggle bio visibility
   };
 
-  const downloadCSV = async () => {
+  const logCompletedUsers = async () => {
     try {
       const querySnapshot = await getDocs(collection(db, "completedUsers"));
-      const userData = querySnapshot.docs.map((doc) => doc.data());
+      const userData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 
-      // Convert user data to CSV
-      const csvData = Papa.unparse(userData);
-      const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-
-      // Create a download link
-      const link = document.createElement("a");
-      link.setAttribute("href", url);
-      link.setAttribute("download", "completed_users.csv");
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      console.log("Completed Users:", userData); // Log the user data
     } catch (error) {
-      console.error("Error downloading CSV:", error);
+      console.error("Error fetching completed users:", error);
     }
   };
+  logCompletedUsers()
 
   const renderStepContent = () => {
     if (step === 1) {
