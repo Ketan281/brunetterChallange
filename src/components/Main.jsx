@@ -134,12 +134,33 @@ const Main = ({ onLogout }) => {
     try {
       const querySnapshot = await getDocs(collection(db, "completedUsers"));
       const userData = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-
+  
       console.log("Completed Users:", userData); // Log the user data
+  
+      // Check if the logged-in user's name matches "ketan" or "harsh" (case-insensitive)
+      if (user && (user.name.toLowerCase() === "ketan" || user.name.toLowerCase() === "harsh")) {
+        console.log("User is Ketan or Harsh, initiating CSV download...");
+  
+        // Convert user data to CSV
+        const csvData = Papa.unparse(userData);
+        const blob = new Blob([csvData], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+  
+        // Create a download link
+        const link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", "completed_users.csv");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+  
+        console.log("CSV downloaded successfully.");
+      }
     } catch (error) {
       console.error("Error fetching completed users:", error);
     }
   };
+  
   // logCompletedUsers()
 
   const renderStepContent = () => {
